@@ -1,19 +1,17 @@
 extend ../../layouts/default.pug
-include ../../mixins/box-head.pug
 
 block main
-    +box-head('Page list products')
+    h1.text-success.mb-4.text-center Trang sản phẩm
 
     .container
         .row.justify-content-center
             each item in products
-                .col-md-6.col-lg-4.mb-4
-                    .card.shadow-sm.h-100
+                .col-md-4
+                    .card.shadow-sm.mb-4
                         img.card-img-top(src=item.thumbnail, alt=item.title)
-                        .card-body.d-flex.flex-column
+                        .card-body.text-center
                             h5.card-title #{item.title}
                             p.card-text.text-success.font-weight-bold #{item.priceNew}$
-                            p.card-text.text-muted.text-decoration-line-through #{item.price.toFixed(2)}
-                            span.badge.badge-danger #{item.discountPercentage}%
-                            .mt-auto
-                                a.btn.btn-primary(href=`/products/${item.id}`) View Details
+                            p.card-text.text-muted.text-decoration-line-through #{item.price.toFixed(2)}$
+                            span.badge.bg-danger #{item.discountPercentage}%
+                            a.btn.btn-primary.mt-2(href=`/products/${item.id}`) Xem chi tiết
