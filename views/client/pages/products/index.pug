@@ -1,15 +1,19 @@
 extend ../../layouts/default.pug
 include ../../mixins/box-head.pug
+
 block main
     +box-head('Page list products')
 
     .container
-        .row.justify-content
-            .col-md-4
-                .card.shadow-sm.mb-4
-                    img.card-img-top(src="https://dummyjson.com/image/150x100/282828", alt="iPhone 9")
-                    .card-body.text-center
-                        h5.card-title iPhone 9
-                        p.card-text.text-success.font-weight-bold 80$
-                        p.card-text.text-muted.text-decoration-line-through 100$
-                        span.badge.badge-danger -20%
+        .row.justify-content-center
+            each item in products
+                .col-md-6.col-lg-4.mb-4
+                    .card.shadow-sm.h-100
+                        img.card-img-top(src=item.thumbnail, alt=item.title)
+                        .card-body.d-flex.flex-column
+                            h5.card-title #{item.title}
+                            p.card-text.text-success.font-weight-bold #{item.priceNew}$
+                            p.card-text.text-muted.text-decoration-line-through #{item.price.toFixed(2)}
+                            span.badge.badge-danger #{item.discountPercentage}%
+                            .mt-auto
+                                a.btn.btn-primary(href=`/products/${item.id}`) View Details
