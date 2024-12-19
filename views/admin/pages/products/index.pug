@@ -1,43 +1,57 @@
 extends ../../layouts/default.pug
-
+include ../../mixins/box-filter.pug
 block main
     h1.text-primary.mb-4.text-center Danh sách sản phẩm
 
-    .card.shadow
-        .card-header.bg-dark.text-white Danh sách
-        .card-body
-            .table-responsive
-                table.table.table-hover.table-striped.table-sm
-                    thead
-                        tr
-                            th
-                            th STT
-                            th Hình ảnh
-                            th Tiêu đề
-                            th Giá
-                            th Trạng thái
-                            th Hành động
+    .container
+        .card.shadow.mb-3
+            .card-header.bg-dark.text-white Bộ lọc và Tìm kiếm
+            .card-body
+                .row
+                    .col-md-4
+                        +box-filter([
+                            { label: "Tất cả", value: "" },
+                            { label: "Hoạt động", value: "active" },
+                            { label: "Dừng hoạt động", value: "inactive" }
+                        ])
+                    .col-md-8
+                        include ../../partials/form-search.pug
 
-                    tbody
-                        each item, index in products
-                            tr 
-                                td
-                                    input.form-check-input(type="checkbox", input-change=item.id)
-                                td #{index + 1}
-                                td
-                                    img(src=item.thumbnail, alt=item.title, class="img-thumbnail", width="100px")
-                                td #{item.title}
-                                td #{item.price}$
-                                td
-                                    if item.status == "active"
-                                        span.badge.bg-success Hoạt động
-                                    else if item.status == "inactive"
-                                        span.badge.bg-danger Dừng hoạt động
-                                td
-                                    button.btn.btn-warning.btn-sm.mr-2 Sửa
-                                    button.btn.btn-danger.btn-sm.ms-1(
-                                        item-id=item.id,
-                                        button-delete,
-                                        data-path=`/${prefixAdmin}/products/delete`
-                                    ) Xóa
+        .card.shadow
+            .card-header.bg-dark.text-white Danh sách
+            .card-body
+                .table-responsive
+                    table.table.table-hover.table-striped.table-sm
+                        thead
+                            tr
+                                th
+                                th STT
+                                th Hình ảnh
+                                th Tiêu đề
+                                th Giá
+                                th Trạng thái
+                                th Hành động
+
+                        tbody
+                            each item, index in products
+                                tr 
+                                    td
+                                        input.form-check-input(type="checkbox", input-change=item.id)
+                                    td #{index + 1}
+                                    td
+                                        img(src=item.thumbnail, alt=item.title, class="img-thumbnail", width="100px")
+                                    td #{item.title}
+                                    td #{item.price}$
+                                    td
+                                        if item.status == "active"
+                                            span.badge.bg-success Hoạt động
+                                        else if item.status == "inactive"
+                                            span.badge.bg-danger Dừng hoạt động
+                                    td
+                                        button.btn.btn-warning.btn-sm Sửa
+                                        button.btn.btn-danger.btn-sm.ms-1.ml-1(
+                                            item-id=item.id,
+                                            button-delete,
+                                            data-path=`/${prefixAdmin}/products/delete`
+                                        ) Xóa
 
