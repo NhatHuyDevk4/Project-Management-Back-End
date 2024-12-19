@@ -1,1 +1,42 @@
-footer Footer
+footer.bg-dark.text-light.py-4
+    .container
+        .row
+            // Logo và mô tả
+            .col-md-4
+                h5.text-uppercase.mb-3 Footer Title
+                p.text-muted
+                    | This is a sample footer description. Add any text here to describe your website or business.
+
+            // Liên kết nhanh
+            .col-md-4
+                h5.text-uppercase.mb-3 Quick Links
+                ul.list-unstyled
+                    li
+                        a.text-light.text-decoration-none(href="#") Home
+                    li
+                        a.text-light.text-decoration-none(href="#") About Us
+                    li
+                        a.text-light.text-decoration-none(href="#") Services
+                    li
+                        a.text-light.text-decoration-none(href="#") Contact Us
+
+            // Mạng xã hội
+            .col-md-4
+                h5.text-uppercase.mb-3 Follow Us
+                ul.list-inline
+                    li.list-inline-item
+                        a.text-light(href="https://facebook.com" target="_blank")
+                            i.fab.fa-facebook
+                    li.list-inline-item
+                        a.text-light(href="https://twitter.com" target="_blank")
+                            i.fab.fa-twitter
+                    li.list-inline-item
+                        a.text-light(href="https://instagram.com" target="_blank")
+                            i.fab.fa-instagram
+                    li.list-inline-item
+                        a.text-light(href="https://linkedin.com" target="_blank")
+                            i.fab.fa-linkedin
+
+        hr.my-4.text-muted
+        .text-center
+            p.mb-0.text-muted &copy; 2024 Your Website. All rights reserved.
