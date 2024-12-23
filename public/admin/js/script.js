@@ -1,11 +1,11 @@
 const listButtonStatus = document.querySelectorAll("[button-status]");
-if(listButtonStatus.length > 0) {
+if (listButtonStatus.length > 0) {
   let url = new URL(window.location.href);
 
   listButtonStatus.forEach((button) => {
     button.addEventListener("click", () => {
       const status = button.getAttribute("button-status");
-      if(status) {
+      if (status) {
         url.searchParams.set("status", status);
       } else {
         url.searchParams.delete("status");
@@ -36,3 +36,19 @@ if (formSearch) {
   });
 }
 // End Form Search
+
+// Button Pagination
+const listButtonPagination = document.querySelectorAll("[button-pagination]");
+console.log(listButtonPagination);
+if (listButtonPagination) {
+  let url = new URL(window.location.href); // cái này là lấy ra url hiện tại
+
+  listButtonPagination.forEach((button) => {
+    button.addEventListener("click", () => {
+      const page = button.getAttribute("button-pagination");
+      url.searchParams.set("page", page);
+      window.location.href = url.href; // cái này là chuyển trang
+    });
+  });
+}
+// End Button Pagination

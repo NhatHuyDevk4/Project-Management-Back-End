@@ -1,6 +1,7 @@
 extends ../../layouts/default.pug
 include ../../mixins/filter-status.pug
 include ../../mixins/search.pug
+include ../../mixins/pagination.pug
 
 block main
     h1(class="mb-4 text-center") Quản lý sản phẩm
@@ -123,3 +124,4 @@ block main
                                     class="btn btn-danger btn-sm ml-1"
                                     button-delete=`/${prefixAdmin}/products/delete/${item.id}`
                                 ) Xóa
+    +pagination(objectPagination)
