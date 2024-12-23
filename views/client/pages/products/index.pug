@@ -6,8 +6,8 @@ block main
     .container
         .row.justify-content-center
             each item in products
-                .col-md-4
-                    .card.shadow-sm.mb-4
+                .col-md-4.mb-4
+                    .card.shadow-sm
                         img.card-img-top(src=item.thumbnail, alt=item.title)
                         .card-body.text-center
                             h5.card-title #{item.title}
