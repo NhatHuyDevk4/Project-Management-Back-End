@@ -72,3 +72,47 @@ if(listButtonChangeStatus.length > 0) {
   })
 }
 // End Button Change Status
+
+
+// CheckBox Multi
+const checkboxMulti = document.querySelector("[checkbox-multi]");
+if(checkboxMulti){
+  const inputCheckAll = checkboxMulti.querySelector("input[name='checkAll']");
+  const listInputId = checkboxMulti.querySelectorAll("input[name='id']");
+  console.log(inputCheckAll);
+  console.log(listInputId);
+
+  inputCheckAll.addEventListener("click", () => {
+    if(inputCheckAll.checked){
+      listInputId.forEach(input => {
+        input.checked = true;
+      })
+    } else {
+      listInputId.forEach(input => {
+        input.checked = false;
+      })
+    }
+  })
+
+  listInputId.forEach(input => {
+    input.addEventListener("click", () => {
+      // lấy ra số lượng input đã được check
+      const countInputChecked = checkboxMulti.querySelectorAll("input[name='id']:checked").length; 
+      
+      // lấy ra dộ dài của list input
+      const lengthInput = listInputId.length;
+
+      if(countInputChecked == lengthInput){
+        inputCheckAll.checked = true;
+      } else {
+        inputCheckAll.checked = false;
+      }
+
+    })
+  })
+}
+// End CheckBox Multi
+
+// Form Change Multi
+
+// End Form Change Multi
