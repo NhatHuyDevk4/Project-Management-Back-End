@@ -58,10 +58,26 @@ module.exports.changeStatus = async (req, res) => {
 // [PATCH] /admin/products/change-multi
 module.exports.changeMulti = async (req, res) => {
   console.log(req.body);
-  res.send("OK");
-  
-};
+  const type = req.body.type;
+  console.log(type);
+  let ids = req.body.ids;
+  ids = ids.split(", "); // split: convert string to array
+  console.log(ids);
 
+  switch (type) {
+    case "active":
+      await Product.updateMany({ _id: { $in: ids } }, { status: "active" }); //{$in: ids} means to get those ids in the array
+      break;
+    case "inactive":
+      await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" }); //{$in: ids} means to get those ids in the array
+      break;
+    default:
+      break;
+  }
+
+
+  res.redirect("back");
+};
 
 // những đoạn call API hay truy vấn dữ liệu thì dùng await
 // vì trong database không biết bao nhiêu bản ghi vì v phải dùng await để chờ lấy ra số lượng bản ghi
