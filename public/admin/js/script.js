@@ -114,5 +114,43 @@ if(checkboxMulti){
 // End CheckBox Multi
 
 // Form Change Multi
+//B1: lấy ra form change multi
+const formChangeMulti = document.querySelector("[form-change-multi]");
+if(formChangeMulti){
+  formChangeMulti.addEventListener("submit", (event) => {
+    //B2: chặn sự kiện mặc định của form load lại
+    event.preventDefault();
+    
+    //B3: Lấy ra thao tác muốn áp dụng
+    const type = formChangeMulti.querySelector("select[name='type']").value;
+    console.log(type);
 
+    //B4: Lấy ra những thằng đã được check
+    const listInputId = document.querySelectorAll("input[name='id']:checked");
+    console.log(listInputId.length);
+
+    //B5: Kiểm tra xem có thằng nào được check không logic
+    if(listInputId.length > 0){
+    //B6: Khai báo mảng ids dùng để chứa id của những thằng được check
+      let ids = [];  
+    
+      const inputIds = formChangeMulti.querySelector("input[name='ids']");
+
+      //B7: Duyệt qua từng thằng được check
+      listInputId.forEach(input => {
+        const id = input.value;
+        //B8: Thêm id vào mảng ids
+          ids.push(id);
+      })
+
+      //B9: Chuyển mảng ids sang chuỗi
+      inputIds.value = ids.join(", ");
+
+      //B10: Submit form
+      formChangeMulti.submit();
+    } else {
+      alert("Vui lòng chọn ít nhất 1 bản ghi");
+    }
+  })
+}
 // End Form Change Multi
