@@ -28,14 +28,7 @@ module.exports.index = async (req, res) => {
 
   // Pagination
   const coutProducts = await Product.countDocuments(find);
-  const objectPagination = paginationHelper(
-    {
-      currentPage: 1,
-      limitItems: 4,
-    },
-    req.query,
-    coutProducts
-  );
+  const objectPagination = paginationHelper(req, coutProducts);
   // End Pagination
 
   const products = await Product.find(find)
@@ -49,6 +42,17 @@ module.exports.index = async (req, res) => {
     keyword: objectSearch.keyword,
     objectPagination: objectPagination,
   });
+};
+
+// [GET] /admin/products/change-status/:status/:id
+module.exports.changeStatus = async (req, res) => {
+  console.log(req.params);
+  const status = req.params.status;
+  const id = req.params.id;
+
+  await Product.updateOne({ _id: id }, { status: status });
+
+  res.redirect(`back`); // chuyển hướng về trang trước
 };
 
 // những đoạn call API hay truy vấn dữ liệu thì dùng await

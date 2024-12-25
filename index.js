@@ -1,15 +1,18 @@
 const express = require("express");
+var methodOverride = require('method-override');
 
 require("dotenv").config();
 const database = require('./config/database');
 const systemConfig = require('./config/system');
 const router = require("./router/client/index.router");
 const routerAdmin = require("./router/admin/index.router");
-
 database.connect();
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+// Này là để nhận dữ liệu từ form bằng method POST gửi lên
+app.use(methodOverride('_method'));
 
 app.set("view engine", "pug");
 app.set("views", "./views");
