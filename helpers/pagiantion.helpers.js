@@ -1,21 +1,18 @@
-module.exports = async (objectPagination, query, countProducts) => {
-    
-  if (query.page) {
+module.exports = (req, countRecords) => {
+  const objectPagination = {
+    currentPage: 1,
+    limitItems: 4
+  }
+
+  if(req.query.page) {
     objectPagination.currentPage = parseInt(req.query.page);
   }
 
-  objectPagination.skip =
-    (objectPagination.currentPage - 1) * objectPagination.limitItems;
+  // CT lấy trang hiện tại - 1 * số lượng sản phẩm
+  objectPagination.skip = (objectPagination.currentPage - 1) * objectPagination.limitItems;
 
-  console.log(objectPagination.skip);
-
-  // CT: (trang hiện tại - 1) * số lượng sản phẩm trên 1 trang
-
-  // lấy ra số trang sản phẩm CT: Math.ceil(số lượng sản phẩm / số lượng sản phẩm trên 1 trang)
-  
-  const totalPage = Math.ceil(countProducts / objectPagination.limitItems);
-  objectPagination.totalPage = totalPage;
-  // End Pagination
+  // CT Lấy tổng sản phẩm chia cho số lượng sản phẩm để hiển thị số trang
+  objectPagination.totalPage = Math.ceil(countRecords/objectPagination.limitItems);
 
   return objectPagination;
 }

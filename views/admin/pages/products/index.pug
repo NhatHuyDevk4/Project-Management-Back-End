@@ -98,12 +98,16 @@ block main
                                         link=`/${prefixAdmin}/products/change-status/inactive/${item.id}`
                                         class="badge badge-success"
                                         button-change-status
+                                        data-status=item.status
+                                        data-id=item.id
                                     ) Hoạt động
                                 else
                                     button(
                                         link=`/${prefixAdmin}/products/change-status/active/${item.id}`
                                         class="badge badge-danger"
                                         button-change-status
+                                        data-status=item.status
+                                        data-id=item.id
                                     ) Dừng hoạt động
                             td
                                 div #{item.createdByFullName}
@@ -125,3 +129,11 @@ block main
                                     button-delete=`/${prefixAdmin}/products/delete/${item.id}`
                                 ) Xóa
     +pagination(objectPagination)
+
+
+    form(
+        form-change-status 
+        method="POST"
+        action=""
+        data-path=`${prefixAdmin}/products/change-status`
+    )
