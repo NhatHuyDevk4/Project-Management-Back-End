@@ -36,26 +36,35 @@ module.exports.index = async (req, res) => {
     .limit(objectPagination.limitItems)
     .skip(objectPagination.skip); // skip: bỏ qua bao nhiêu sản phẩm
 
+  const messages = {
+    success: req.flash("success"),
+  };
+
   res.render("admin/pages/products/index", {
     pageTitle: "Danh sách sản phẩm",
     products: products,
     filterStatus: filterStatus,
     keyword: objectSearch.keyword,
     objectPagination: objectPagination,
+    messages,
   });
 };
 
 // [OATCH] /admin/products/change-status/:status/:id
 module.exports.changeStatus = async (req, res) => {
-  console.log(req.params);
-  const status = req.params.status;
-  const id = req.params.id;
+  try {
+    const { status, id } = req.params;
 
-  await Product.updateOne({ _id: id }, { status: status });
+    await Product.updateOne({ _id: id }, { status: status });
 
-  res.redirect(`back`); // chuyển hướng về trang trước
+    req.flash("success", "Cập nhật trạng thái thành công");
+  } catch (error) {
+    console.error("Error updating product status:", error);
+    req.flash("error", "Cập nhật trạng thái thất bại");
+  }
+
+  res.redirect("back"); // chuyển hướng về trang trước
 };
-
 // [PATCH] /admin/products/change-multi
 module.exports.changeMulti = async (req, res) => {
   const type = req.body.type;
@@ -65,15 +74,24 @@ module.exports.changeMulti = async (req, res) => {
   switch (type) {
     case "active":
       await Product.updateMany({ _id: { $in: ids } }, { status: "active" }); //{$in: ids} means to get those ids in the array
+      req.flash(
+        "success",
+        `Cập nhật trạng thái thành công ${ids.length} sản phẩm`
+      );
       break;
     case "inactive":
       await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" }); //{$in: ids} means to get those ids in the array
+      req.flash(
+        "success",
+        `Cập nhật trạng thái thành công ${ids.length} sản phẩm`
+      );
       break;
     case "delete-all":
       await Product.updateMany(
         { _id: { $in: ids } },
         { deleted: true, deletedAt: new Date() }
       );
+      req.flash("success", `Xóa thành công ${ids.length} sản phẩm`);
       break;
     case "change-position":
       for (const item of ids) {
@@ -87,6 +105,7 @@ module.exports.changeMulti = async (req, res) => {
             position: position,
           }
         );
+        req.flash("success", `Cập nhật vị trí thành công`);
       }
       break;
     default:

@@ -1,3 +1,4 @@
+
 const listButtonStatus = document.querySelectorAll("[button-status]");
 if (listButtonStatus.length > 0) {
   let url = new URL(window.location.href);
@@ -194,3 +195,21 @@ if (listButtonDelete.length > 0) {
   });
 }
 // End DELETE
+
+
+// Show-alert
+const showAlert = document.querySelector("[show-alert]");
+if(showAlert){
+  let time = showAlert.getAttribute("data-time");
+  time = parseInt(time);
+
+  setTimeout(() => {
+    showAlert.classList.add("alert-hidden");
+  }, time);
+
+  const buttonClose = showAlert.querySelector("[close-alert]");
+  buttonClose.addEventListener("click", () => {
+    showAlert.classList.add("alert-hidden");
+  })
+}
+// End Show-alert
