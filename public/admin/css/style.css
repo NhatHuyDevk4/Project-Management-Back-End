@@ -61,28 +61,24 @@
     top: 70px;
     right: 15px;
     z-index: 9999;
-    border-radius: 10px;
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-[show-alert].alert-hidden {
+  }
+  
+  [show-alert].alert-hidden {
     animation-name: alert-hidden;
     animation-duration: 0.5s;
     animation-fill-mode: both;
-}
-
-@keyframes alert-hidden {
+  }
+  
+  @keyframes alert-hidden {
     from {
-        right: 15px;
+      right: 15px;
     }
     to {
-        right: -100%;
-        display: none;
+      right: -100%;
+      display: none;
     }
-}
+  }
+  /* End Show Alert */
 
 /* image-preview */
 .image-preview {
