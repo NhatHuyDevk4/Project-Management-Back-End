@@ -67,13 +67,12 @@ block main
                             td #{item.title}
                             td #{item.price}$
                             td
-                                input.form-control(
+                                input(
                                     type="number"
                                     name="position"
                                     value=item.position
                                     style="width: 60px"
                                     min="1"
-                                    link=`/${prefixAdmin}/products/change-position/${item.id}`
                                 )
                             td
                                 if item.status == "active"

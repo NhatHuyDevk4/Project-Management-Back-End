@@ -139,8 +139,16 @@ if (formChangeMulti) {
       //B7: Duyệt qua từng thằng được check
       listInputId.forEach((input) => {
         const id = input.value;
-        //B8: Thêm id vào mảng ids
-        ids.push(id);
+
+        // Thay đổi vị trí
+        if(type == "change-position") {
+          const position = input.closest("tr").querySelector("input[name='position']").value; // closest: lấy ra thằng cha gần nhất
+          ids.push(`${id}-${position}`);
+        } else {
+          //B8: Thêm id vào mảng ids
+          ids.push(id);
+        }
+        // END Thay đổi vị trí
       });
 
       //B9: Chuyển mảng ids sang chuỗi

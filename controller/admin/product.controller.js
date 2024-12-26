@@ -32,6 +32,7 @@ module.exports.index = async (req, res) => {
   // End Pagination
 
   const products = await Product.find(find)
+    .sort({ position: "desc" }) // sort: sắp xếp
     .limit(objectPagination.limitItems)
     .skip(objectPagination.skip); // skip: bỏ qua bao nhiêu sản phẩm
 
@@ -57,12 +58,9 @@ module.exports.changeStatus = async (req, res) => {
 
 // [PATCH] /admin/products/change-multi
 module.exports.changeMulti = async (req, res) => {
-  console.log(req.body);
   const type = req.body.type;
-  console.log(type);
   let ids = req.body.ids;
   ids = ids.split(", "); // split: convert string to array
-  console.log(ids);
 
   switch (type) {
     case "active":
@@ -72,7 +70,25 @@ module.exports.changeMulti = async (req, res) => {
       await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" }); //{$in: ids} means to get those ids in the array
       break;
     case "delete-all":
-      await Product.updateMany({ _id: { $in: ids } }, { deleted: true, deletedAt: new Date() });
+      await Product.updateMany(
+        { _id: { $in: ids } },
+        { deleted: true, deletedAt: new Date() }
+      );
+      break;
+    case "change-position":
+      for (const item of ids) {
+        let [id, position] = item.split("-");
+        position = parseInt(position);
+        await Product.updateOne(
+          {
+            _id: id,
+          },
+          {
+            position: position,
+          }
+        );
+      }
+      break;
     default:
       break;
   }
@@ -84,7 +100,10 @@ module.exports.changeMulti = async (req, res) => {
 module.exports.deleteItem = async (req, res) => {
   const id = req.params.id;
 
-  await Product.updateOne({ _id: id }, { deleted: true, deletedAt: new Date() });
+  await Product.updateOne(
+    { _id: id },
+    { deleted: true, deletedAt: new Date() }
+  );
 
   res.redirect("back");
 };
