@@ -40,7 +40,7 @@ block main
                 .col-md-8
                     +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
                 .col-md-4.text-right
-                        a.btn.btn-outline-success(href=`/${prefixAdmin}/products/create`) + Thêm mới
+                    a.btn.btn-outline-success(href=`/${prefixAdmin}/products/create`) + Thêm mới
             table(class="table table-bordered table-hover" checkbox-multi)
                 thead
                     tr
@@ -97,9 +97,19 @@ block main
                                 div #{item.updatedByFullName}
                                 div #{item.updatedAtFormat}
                             td
-                                a.btn.btn-info.btn-sm(href=`/${prefixAdmin}/products/detail/${item.id}`) Chi tiết
-                                a.btn.btn-warning.btn-sm(href=`/${prefixAdmin}/products/edit/${item.id}`) Sửa
-                                button.btn.btn-danger.btn-sm.ml-1(button-delete=`/${prefixAdmin}/products/delete/${item.id}`) Xóa
+                                a(
+                                    href=`/${prefixAdmin}/products/edit/${item.id}`
+                                    class="btn btn-warning btn-sm"
+                                ) Sửa
+                                button(
+                                    class="btn btn-danger btn-sm ml-1"
+                                    button-delete
+                                    data-id=item.id
+                                ) Xóa
+                                a(
+                                    href=`/${prefixAdmin}/products/detail/${item.id}`
+                                    class="btn btn-info btn-sm ml-1"
+                                ) Chi tiết
     +pagination(objectPagination)
 
     form(
@@ -108,3 +118,11 @@ block main
         action=""
         data-path=`${prefixAdmin}/products/change-status`
     )
+
+    form(
+        form-delete-item
+        method="POST"
+        action=""
+        data-path=`${prefixAdmin}/products/delete`
+    )
+
