@@ -125,11 +125,9 @@ if (formChangeMulti) {
 
     //B3: Lấy ra thao tác muốn áp dụng
     const type = formChangeMulti.querySelector("select[name='type']").value;
-    console.log(type);
 
     //B4: Lấy ra những thằng đã được check
     const listInputId = document.querySelectorAll("input[name='id']:checked");
-    console.log(listInputId.length);
 
     //B5: Kiểm tra xem có thằng nào được check không logic
     if (listInputId.length > 0) {
@@ -147,6 +145,15 @@ if (formChangeMulti) {
 
       //B9: Chuyển mảng ids sang chuỗi
       inputIds.value = ids.join(", ");
+
+      // Xóa tất cả
+      if (type == "delete-all") {
+        const confirmDelete = confirm("Bạn có chắc muốn xóa những bản ghi này?");
+        if (!confirmDelete) {
+          return;
+        }
+      }
+      // End Xóa tất cả
 
       //B10: Submit form
       formChangeMulti.submit();
