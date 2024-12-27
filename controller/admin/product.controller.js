@@ -1,5 +1,5 @@
 const Product = require("../../models/product.model");
-
+const systemConfig = require("../../config/system");
 const filterStatusHelpers = require("../../helpers/filterStatus.helpers");
 const searchHelper = require("../../helpers/search.helper");
 const paginationHelper = require("../../helpers/pagiantion.helpers");
@@ -38,6 +38,7 @@ module.exports.index = async (req, res) => {
 
   const messages = {
     success: req.flash("success"),
+    error: req.flash("error"),
   };
 
   res.render("admin/pages/products/index", {
@@ -127,5 +128,37 @@ module.exports.deleteItem = async (req, res) => {
   res.redirect("back");
 };
 
+// [GET] /admin/products/create
+module.exports.create = async (req, res) => {
+ 
+
+  res.render("admin/pages/products/create", {
+    pageTitle: "Thêm sản phẩm",
+  })
+
+
+};
+
+// [POST] /admin/products/create
+module.exports.createPost = async (req, res) => {
+  
+  req.body.price = parseInt(req.body.price);
+  req.body.discountPercentage = parseInt(req.body.discountPercentage);
+  req.body.stock = parseInt(req.body.stock);
+
+  if(req.body.position == ""){ // Nếu không nhập vị trí thì tự động tạo vị trí mới
+    const countProducts = await Product.countDocuments();
+    req.body.position = countProducts + 1;
+  } else { // Nếu nhập vị trí thì chuyển vị trí thành số
+    req.body.position = parseInt(req.body.position);
+  }
+
+  const product = new Product(req.body); // Tạo ra một bản ghi mới
+  await product.save(); // Lưu vào trong DB
+
+  res.redirect(`${systemConfig.prefixAdmin}/products`);
+};
+
 // những đoạn call API hay truy vấn dữ liệu thì dùng await
 // vì trong database không biết bao nhiêu bản ghi vì v phải dùng await để chờ lấy ra số lượng bản ghi
+// Nếu gửi qua form thì dùng req.body
