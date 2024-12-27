@@ -45,7 +45,7 @@ block main
                 .col-md-8
                     +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
                 .col-md-4.text-right
-                    a.btn.btn-outline-success(href=`/${prefixAdmin}/products/create`) + Thêm mới
+                    a.btn.btn-outline-success(href=`${prefixAdmin}/products/create`) + Thêm mới
             table(class="table table-bordered table-hover" checkbox-multi)
                 thead
                     tr
