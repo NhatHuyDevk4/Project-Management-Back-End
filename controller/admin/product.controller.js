@@ -3,7 +3,7 @@ const systemConfig = require("../../config/system");
 const filterStatusHelpers = require("../../helpers/filterStatus.helpers");
 const searchHelper = require("../../helpers/search.helper");
 const paginationHelper = require("../../helpers/pagiantion.helpers");
-// [GET] /admin/products/
+
 
 // [GET] /admin/products/
 module.exports.index = async (req, res) => {
@@ -152,6 +152,8 @@ module.exports.createPost = async (req, res) => {
   } else { // Nếu nhập vị trí thì chuyển vị trí thành số
     req.body.position = parseInt(req.body.position);
   }
+
+  req.body.thumbnail = `/uploads/${req.file.filename}`;
 
   const product = new Product(req.body); // Tạo ra một bản ghi mới
   await product.save(); // Lưu vào trong DB

@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 const flash = require('connect-flash');
 // Thằng cookie-parser là thư viện dùng để lưu cookie
 const cookieParser = require('cookie-parser');
-// thằng session là thư viện dùng để lưu session
+// Thằng session là thư viện dùng để lưu session
 const session = require('express-session');
 require("dotenv").config();
 const database = require('./config/database');
@@ -23,7 +23,6 @@ app.use(methodOverride('_method'));
 
 // Này là để nhận dữ liệu từ form bằng method POST gửi lên
 app.use(bodyParser.urlencoded({ extended: false }));
-
 
 
 app.set("view engine", "pug");
