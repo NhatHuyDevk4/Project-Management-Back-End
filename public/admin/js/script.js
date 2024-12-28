@@ -213,3 +213,26 @@ if(showAlert){
   })
 }
 // End Show-alert
+
+
+// Upload Image
+const uploadImage = document.querySelector("[upload-image]");
+if(uploadImage){
+  const uploadInputImage = uploadImage.querySelector("input[type='file']");
+  const uploadImagePreview = uploadImage.querySelector("img");
+
+  uploadInputImage.addEventListener("change", () => {
+    const file = uploadInputImage.files[0];
+    if(file){
+      // Tạo ra 1 đường dẫn ảnh url tạm thời
+      uploadImagePreview.src = URL.createObjectURL(file);
+    }
+  });
+
+  const clearImg = uploadImage.querySelector("[clear-img]");
+  clearImg.addEventListener("click", () => {
+    uploadImagePreview.src = "";
+    uploadInputImage.value = "";
+  });
+}
+// End Upload Image
