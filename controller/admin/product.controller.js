@@ -4,7 +4,6 @@ const filterStatusHelpers = require("../../helpers/filterStatus.helpers");
 const searchHelper = require("../../helpers/search.helper");
 const paginationHelper = require("../../helpers/pagiantion.helpers");
 
-
 // [GET] /admin/products/
 module.exports.index = async (req, res) => {
   const find = {
@@ -130,30 +129,38 @@ module.exports.deleteItem = async (req, res) => {
 
 // [GET] /admin/products/create
 module.exports.create = async (req, res) => {
- 
+
+
+  const messages = {
+    success: req.flash("success"),
+    error: req.flash("error"),
+  };
+
 
   res.render("admin/pages/products/create", {
     pageTitle: "Thêm sản phẩm",
-  })
-
-
+    messages,
+  });
 };
 
 // [POST] /admin/products/create
 module.exports.createPost = async (req, res) => {
-  
   req.body.price = parseInt(req.body.price);
   req.body.discountPercentage = parseInt(req.body.discountPercentage);
   req.body.stock = parseInt(req.body.stock);
 
-  if(req.body.position == ""){ // Nếu không nhập vị trí thì tự động tạo vị trí mới
+  if (req.body.position == "") {
+    // Nếu không nhập vị trí thì tự động tạo vị trí mới
     const countProducts = await Product.countDocuments();
     req.body.position = countProducts + 1;
-  } else { // Nếu nhập vị trí thì chuyển vị trí thành số
+  } else {
+    // Nếu nhập vị trí thì chuyển vị trí thành số
     req.body.position = parseInt(req.body.position);
   }
 
-  req.body.thumbnail = `/uploads/${req.file.filename}`;
+  if (req.file) {
+    req.body.thumbnail = `/uploads/${req.file.filename}`;
+  }
 
   const product = new Product(req.body); // Tạo ra một bản ghi mới
   await product.save(); // Lưu vào trong DB
