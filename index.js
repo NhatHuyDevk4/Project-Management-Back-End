@@ -25,7 +25,7 @@ app.use(methodOverride('_method'));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
-app.set("view engine", `${__dirname}pug`);
+app.set("view engine", `pug`);
 app.set("views", "./views");
 
 // Flash thư viện dùng để hiển thị thông báo
@@ -44,7 +44,7 @@ app.use(flash());
 // APP locals variable để dùng toàn bộ server
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 
-app.use(express.static(`${__dirname}/public`)); // này là file tĩnh file tĩnh public ra bên ngoài ai cũng coi được
+app.use(express.static(`public`)); // này là file tĩnh file tĩnh public ra bên ngoài ai cũng coi được
 
 //ROUTES
 routerAdmin(app);
