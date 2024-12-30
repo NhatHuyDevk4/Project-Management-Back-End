@@ -17,11 +17,36 @@ module.exports.index = async (req, res) => {
 
   console.log("Product", products);
 
+  const messages = {
+    success: req.flash("success"),
+    error: req.flash("error"),
+  };
+
   res.render("client/pages/products/index", {
     pageTitle: "Danh sách sản phẩm",
     products: newProdcut,
+    messages
   });
 };
+
+// [GET] /products/detail/:slug
+module.exports.slug = async (req, res) => {
+
+  console.log(req.params.slug);
+
+  const slug = req.params.slug;
+
+  const product = await Product.findOne({
+    slug: slug,
+    status: "active",
+    deleted: false,
+  })
+
+  res.render("client/pages/products/detail", {
+    pageTitle: "Trang chi tiết sản phẩm",
+    product: product
+  })
+}
 
 // module là một đối tượng chứa các phương thức xử lý logic của ứng dụng
 // exports dùng để xuất các phương thức xử lý logic của ứng dụng

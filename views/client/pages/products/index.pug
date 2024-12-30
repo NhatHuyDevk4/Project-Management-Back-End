@@ -10,8 +10,8 @@ block main
                     .card.shadow-sm
                         img.card-img-top(src=item.thumbnail, alt=item.title)
                         .card-body.text-center
-                            h5.card-title #{item.title}
+                            a(href=`/products/detail/${item.slug}`)
+                                h5.card-title.text-dark #{item.title}
                             p.card-text.text-success.font-weight-bold #{item.priceNew}$
                             p.card-text.text-muted.text-decoration-line-through #{item.price.toFixed(2)}$
                             span.badge.bg-danger #{item.discountPercentage}%
-                            a.btn.btn-primary.mt-2(href=`/products/${item.id}`) Xem chi tiết
