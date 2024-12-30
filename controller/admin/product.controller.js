@@ -172,7 +172,7 @@ module.exports.edit = async (req, res) => {
       success: req.flash("success"),
       error: req.flash("error"),
     };
-  
+
     const id = req.params.id;
     const product = await Product.findOne({ _id: id, deleted: false });
     res.render("admin/pages/products/edit", {
@@ -216,9 +216,18 @@ module.exports.editPatch = async (req, res) => {
   }
 
   res.redirect(`back`); // chuyển hướng về trang trước
-
 };
 
+// [GET] /admin/products/detail/:id
+module.exports.detail = async (req, res) => {
+  const id = req.params.id;
+  const product = await Product.findOne({ _id: id, deleted: false });
+
+  res.render("admin/pages/products/detail", {
+    pageTitle: "Trang chi tiết sản phẩm",
+    product: product,
+  });
+};
 // những đoạn call API hay truy vấn dữ liệu thì dùng await
 // vì trong database không biết bao nhiêu bản ghi vì v phải dùng await để chờ lấy ra số lượng bản ghi
 // Nếu gửi qua form thì dùng req.body
