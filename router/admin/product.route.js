@@ -2,11 +2,14 @@ const express = require("express");
 // Thằng multer là thư viện dùng để upload file
 const multer = require("multer");
 const router = express.Router();
-const storageMulter = require("../../helpers/storageMulter.helpers");
-const upload = multer({ storage: storageMulter() });
+
+
+
+const upload = multer();
 
 const controller = require("../../controller/admin/product.controller");
 const validate = require("../../validate/admin/product.validate");
+const uploadCloud = require('../../middlewares/admin/uploadClound.middlewares');
 
 router.get("/", controller.index);
 
@@ -22,6 +25,7 @@ router.get("/create", controller.create);
 router.post(
   "/create",
   upload.single("thumbnail"),
+  uploadCloud.upload,
   validate.createPost,
   controller.createPost
 );
@@ -31,10 +35,11 @@ router.get("/edit/:id", controller.edit);
 router.patch(
   "/edit/:id",
   upload.single("thumbnail"),
+  uploadCloud.upload,
   validate.createPost,
   controller.editPatch
 );
 
-router.get("/detail/:id", controller.detail)
+router.get("/detail/:id", controller.detail);
 
 module.exports = router;
