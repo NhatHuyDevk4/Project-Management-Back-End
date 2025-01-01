@@ -1,4 +1,3 @@
-
 const listButtonStatus = document.querySelectorAll("[button-status]");
 if (listButtonStatus.length > 0) {
   let url = new URL(window.location.href);
@@ -142,8 +141,10 @@ if (formChangeMulti) {
         const id = input.value;
 
         // Thay đổi vị trí
-        if(type == "change-position") {
-          const position = input.closest("tr").querySelector("input[name='position']").value; // closest: lấy ra thằng cha gần nhất
+        if (type == "change-position") {
+          const position = input
+            .closest("tr")
+            .querySelector("input[name='position']").value; // closest: lấy ra thằng cha gần nhất
           ids.push(`${id}-${position}`);
         } else {
           //B8: Thêm id vào mảng ids
@@ -157,7 +158,9 @@ if (formChangeMulti) {
 
       // Xóa tất cả
       if (type == "delete-all") {
-        const confirmDelete = confirm("Bạn có chắc muốn xóa những bản ghi này?");
+        const confirmDelete = confirm(
+          "Bạn có chắc muốn xóa những bản ghi này?"
+        );
         if (!confirmDelete) {
           return;
         }
@@ -196,10 +199,9 @@ if (listButtonDelete.length > 0) {
 }
 // End DELETE
 
-
 // Show-alert
 const showAlert = document.querySelector("[show-alert]");
-if(showAlert){
+if (showAlert) {
   let time = showAlert.getAttribute("data-time");
   time = parseInt(time);
 
@@ -210,20 +212,19 @@ if(showAlert){
   const buttonClose = showAlert.querySelector("[close-alert]");
   buttonClose.addEventListener("click", () => {
     showAlert.classList.add("alert-hidden");
-  })
+  });
 }
 // End Show-alert
 
-
 // Upload Image
 const uploadImage = document.querySelector("[upload-image]");
-if(uploadImage){
+if (uploadImage) {
   const uploadInputImage = uploadImage.querySelector("input[type='file']");
   const uploadImagePreview = uploadImage.querySelector("img");
 
   uploadInputImage.addEventListener("change", () => {
     const file = uploadInputImage.files[0];
-    if(file){
+    if (file) {
       // Tạo ra 1 đường dẫn ảnh url tạm thời
       uploadImagePreview.src = URL.createObjectURL(file);
     }
@@ -236,3 +237,35 @@ if(uploadImage){
   });
 }
 // End Upload Image
+
+// Sort
+const sort = document.querySelector("[sort]");
+if (sort) {
+  let url = new URL(window.location.href); // lấy ra url hiện tại
+  const sortSelect = document.querySelector("[sort-select]");
+  const sortClear = document.querySelector("[sort-clear]");
+  sortSelect.addEventListener("change", (e) => {
+    console.log(sortSelect.value);
+    const [sortKey, sortValue] = sortSelect.value.split("-"); // split: tách chuỗi thành mảng
+
+    url.searchParams.set("sortKey", sortKey); // set lại giá trị của sortKey
+    url.searchParams.set("sortValue", sortValue); // set lại giá trị của sortValue
+    window.location.href = url.href; // chuyển hướng trang
+  });
+
+  sortClear.addEventListener("click", () => {
+    url.searchParams.delete("sortKey");
+    url.searchParams.delete("sortValue");
+    window.location.href = url.href; // chuyển hướng trang
+  });
+
+  // Thêm selected cho lựa chọn hiện tại
+  const selectedSortKey = url.searchParams.get("sortKey");
+  const selectedSortValue = url.searchParams.get("sortValue");
+  if(selectedSortKey && selectedSortValue) {
+    const stringSort = `${selectedSortKey}-${selectedSortValue}`;
+    const optionSelected = sortSelect.querySelector(`option[value='${stringSort}']`);
+    optionSelected.selected = true;
+  }
+}
+// End Sort

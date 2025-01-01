@@ -30,8 +30,21 @@ module.exports.index = async (req, res) => {
   const objectPagination = paginationHelper(req, coutProducts);
   // End Pagination
 
+  // Sort
+  let sort = {};
+
+  if(req.query.sortKey && req.query.sortValue) {
+    // Này là nếu có sortKey và sortValue thì sẽ sắp xếp theo sortKey và sortValue
+    const sortKey = req.query.sortKey;
+    const sortValue = req.query.sortValue;
+    sort[sortKey] = sortValue; //sort[sortKey] là cách viết động có nghĩa là sortKey có thể là position, price, discountPercentage, stock
+  } else {
+    sort.position = "desc";
+  }
+  // End Sort
+
   const products = await Product.find(find)
-    .sort({ position: "desc" }) // sort: sắp xếp
+    .sort() // sort: sắp xếp
     .limit(objectPagination.limitItems)
     .skip(objectPagination.skip); // skip: bỏ qua bao nhiêu sản phẩm
 
