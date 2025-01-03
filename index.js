@@ -1,4 +1,6 @@
 const express = require("express");
+// TinyMCE thư viện dùng để soạn thảo văn bản
+const path = require("path");
 var methodOverride = require('method-override');
 // Thằng này dùng để nhận dữ liệu từ form gửi lên
 var bodyParser = require('body-parser');
@@ -37,8 +39,11 @@ app.use(session({
   cookie: { maxAge: 60000 } 
 }));
 app.use(flash());
-
 // End Flash
+
+// TinyMCE thư viện dùng để soạn thảo văn bản
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+// End TinyMCE
 
 
 // APP locals variable để dùng toàn bộ server
